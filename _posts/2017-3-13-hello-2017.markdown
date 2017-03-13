@@ -1,0 +1,34 @@
+---
+layout:     post
+title:      "Welcome to My Blog"
+subtitle:   " \"Hello World, Hello Blog\""
+date:       2017-03-13 22:11:00
+author:     "AJW"
+header-img: "img/post-bg-2015.jpg"
+tags:
+    - 生活
+---
+
+> “Yeah It's on. ”
+
+
+## 前言
+
+AJW 的 Blog 就这么开通了。
+
+[跳过废话，直接看技术实现 ](#build)
+
+一直想找个地方写写自己新学到的知识，记录一下学习历程。但一直也没找到好的方式。那些博客的平台都太丑了，看着就没有维护下去的动力。  
+偶然看到github上可以免费搭博客，而且轻松简单，最重要的是还很美观，就花了一下午的时间搭了个博客，今后就尝试着在这上面写些东西了。
+
+
+<p id = "build"></p>
+---
+
+## 正文
+
+博客主要是基于Github Page + Jekyll，整个搭建过程还是轻松愉快的。
+百度一下可以找到很多教程，最简单的其实就是找个别人的模板，然后fork过来，改改配置，改改页面的布局和名字，就大功告成了。博客更新只要写好markdown，然后按照git的方法add commit push到github上就可以了。  
+所以，找个好模板还是很重要的，在知乎上找到了[黄玄](https://www.zhihu.com/question/20223939)的回答，看着还挺炫酷，就fork了[他的模板](https://github.com/Huxpro/huxpro.github.io)，在这基础上进行了一些小修改。这个模板作者在按照一个开源项目来维护，文档还是挺齐全的，各种配置也都有所说明，所以用起来十分方便，在这里十分感谢作者。  
+
+唯一一个需要注意的是，网上大部分Jekyll的安装教程都是Linux下的，但是自己还是会用window系统，所以参考了这篇[windows下安装Jekyll的教程](http://www.jianshu.com/p/310d796cf5f3)，亲测应该是没有问题，又需要的读者可以参考。
