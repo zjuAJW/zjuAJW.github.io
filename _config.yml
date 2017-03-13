@@ -12,11 +12,11 @@ keyword: ""
 
 # SNS settings
 RSS: false
-weibo_username:     zjuAJW
+#weibo_username:     zjuAJW
 zhihu_username:     zju-AJW
 github_username:    zjuAJW
 #twitter_username:  huxpro
-facebook_username:  zjuAJW
+#facebook_username:  zjuAJW
 
 
 
@@ -50,7 +50,7 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username: 424431040
+duoshuo_username: AJW
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
@@ -62,7 +62,7 @@ duoshuo_share: true                     # set to false if you want to use Commen
 ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+#ga_domain: huangxuan.me
 
 
 
@@ -83,7 +83,7 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "AJW BLOG",
-        href: "http://huangxuan.me"
+        href: "https://zjuAJW.github.io"
     },{
         title: "Foo",
         href: "#"
