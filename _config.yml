@@ -1,6 +1,6 @@
 # Site settings
-title: AJW BLOG
-SEOTitle: AJW的博客 | AJW Blog
+title: AJW's BLOG
+SEOTitle: AJW的博客 | AJW's Blog
 header-img: img/home-bg.jpg
 email: wja_1993@163.com
 description: "Welcome to my blog"
@@ -85,8 +85,8 @@ friends: [
         title: "AJW BLOG",
         href: "https://zjuAJW.github.io"
     },{
-        title: "Foo",
-        href: "#"
+        title: "Hux BLOG-模板来源",
+        href: "https://github.com/Huxpro/huxpro.github.io"
     },{
         title: "Bar",
         href: "#"
