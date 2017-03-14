@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "MongoDB Collecion数量限制和数据库大小限制"
-subtitle:   " \"该死的mongo\""
+subtitle:   "wiredTiger和MMAPv1还是很不同"
 date:       2017-03-14 17:18:00
 author:     "AJW"
 header-img: "img/mongodb.jpg"
@@ -35,6 +35,9 @@ Namespece File在官方文档中也有说明
 >The MMAPv1 storage engine limits each database to no more than 16000 data files.   
 >This means that a single MMAPv1 database has a maximum size of 32TB.   
 >Setting the storage.mmapv1.smallFiles option reduces this limit to 8TB.
+
+###待确认
+网上也有很多地方说数据库的大小是没有限制的，是我理解上边这段话理解错了吗？
 
 #
 #
