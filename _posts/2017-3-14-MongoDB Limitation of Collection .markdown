@@ -12,7 +12,7 @@ tags:
 MongoDB Collecion数量限制和数据库大小限制  
 --- 
 
-##Collection数量
+## Collection数量
 对于Mongo3.4，默认的存储引擎是**WiredTiger**，对Collecion的数量没有限制。  
 而对于Mongo3.2以前的版本，默认存储引擎是**MMAPv1**，官方文档的说法是
 
@@ -28,17 +28,17 @@ Namespece File在官方文档中也有说明
 
 同样的，**WiredTiger**引擎也不受这个限制。 
 
-##数据库大小
+## 数据库大小
 在官方文档上找到了关于**MMAPv1**的数据库大小的限制,最大32TB，但是没有找到关于**WiredTiger**的
 
 >The MMAPv1 storage engine limits each database to no more than 16000 data files.   
 >This means that a single MMAPv1 database has a maximum size of 32TB.   
 >Setting the storage.mmapv1.smallFiles option reduces this limit to 8TB.
 
-###待确认
+### 待确认
 网上也有很多地方说数据库的大小是没有限制的，是我理解上边这段话理解错了吗？
 
-##操作系统的限制
+## 操作系统的限制
 为了以防万一，还是写了一个脚本，在一个db里创建10万个collection，看会不会出问题。果然，不出所料，还是出问题了。  
 
 第一次插入到接近500次的时候就停了，查看发现mongo服务直接被干掉了。很奇怪，又运行了一次，还是这样。如果不删除已建立的collection的话，每次运行能插入的数量越来越少。最后在988个collection后，再插入就报错：
