@@ -9,8 +9,8 @@ tags:
     - Mongodb
 ---
 
-#MongoDB Collecion数量限制和数据库大小限制  
- 
+MongoDB Collecion数量限制和数据库大小限制  
+--- 
 
 ##Collection数量
 对于Mongo3.4，默认的存储引擎是**WiredTiger**，对Collecion的数量没有限制。  
