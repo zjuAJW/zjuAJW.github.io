@@ -10,7 +10,7 @@ tags:
 ---
 
 #Mongo 单个collection大数据量插入性能测试  
-#
+
 由于之前发现不能在一个mongo实例下建立太多的collection，所以只能把数据存在一个collction中咯。所以想测试一下Mongo在单个collection中大数据量下的插入性能。
 
 
