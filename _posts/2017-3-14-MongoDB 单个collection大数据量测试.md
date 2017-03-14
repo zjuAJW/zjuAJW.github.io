@@ -14,7 +14,7 @@ tags:
 由于之前发现不能在一个mongo实例下建立太多的collection，所以只能把数据存在一个collction中咯。所以想测试一下Mongo在单个collection中大数据量下的插入性能。
 
 
-##实验设置
+##实验设置  
 利用mongoimport向单个collection中导入100万条8个int的数据，重复300次。collection上建立了4个键的复合索引。  
 ##实验结果
 ![单个collection大数据量下的插入性能](https://github.com/zjuAJW/MarkdownPhoto/blob/master/mongo.png?raw=true)
