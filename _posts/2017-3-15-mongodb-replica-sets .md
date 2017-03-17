@@ -32,4 +32,15 @@ tags:
 >Do not run an arbiter on systems that also host the primary or the secondary members of the replica set.
 
 ## oplog
-oplog是副本集之间保持同步的方式。
+oplog是副本集之间用于同步的一个log，它是一个capped collection。主节点上所有更改数据的动作都会记录在oplog中，从节点会**异步地**来复制这些操作。所有副本集中的成员都会保存一份oplog（在local.oplog.rs这个集合中），从节点在获取了源节点的oplog后，先执行操作，然后再把操作写到自己的oplog中。副本集成员之间还会发送心跳信号来促进复制的过程。
+	
+	这里有两个小问题：
+	1. 仲裁节点中有oplog吗？
+	2. 心跳信号什么用？
+	----------------
+	
+
+ 
+oplog有一个特性是幂等性，也就是说oplog里的操作执行多次和执行一次，效果是一样的。这也就保证了如果一个从节点在复制的过程中挂掉了，重启后接着执行的时候就不会出现错误了。
+
+##同步
