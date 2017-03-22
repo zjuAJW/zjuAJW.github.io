@@ -25,14 +25,14 @@ B树简单来说就是一棵多叉的平衡查找树，m(m>=2)阶B树的定义�
 5. 所有的叶节点都在同一层。
 
 下图是一棵3阶B树的建树过程。依次插入6 10 4 14 5 11 15 3 2 12 1 7 8 8 6 3 6 21 5 15 15 6 32 23 45 65 7 8 6 5 4
-![B-Tree Build](https://github.com/zjuAJW/MarkdownPhoto/blob/master/btreebuild.gif?raw=true)
+![B-Tree Build](/img/in-post/btree-and-db-index/btreebuild.gif)
 
 ### B树的高度
 B树的高度
 
 $$h\leq\log_t\frac{n+1}{2}$$
 
-![B-tree的高度](https://github.com/zjuAJW/MarkdownPhoto/blob/master/height%20of%20B-tree.jpg?raw=true)
+![B-tree的高度](/img/in-post/btree-and-db-index/height-of-B-tree.jpg)
 
 这里的t其实相当于是m/2，因为每个节点至少有m/2个孩子。
 
@@ -46,7 +46,7 @@ B+树是在B树基础上的一个改进，其基本定义与B树相同，差异�
 3. 树的所有叶节点构成一个有序链表，可以按照关键字的顺序遍历全部记录。
 
 下图是一棵3阶B+树的建树过程
-![B+Tree建树过程](https://github.com/zjuAJW/MarkdownPhoto/blob/master/Bplustreebuild.gif?raw=true)
+![B+Tree建树过程](/img/in-post/btree-and-db-index/Bplustreebuild.gif)
 
 从建树的过程来看，主要区别在于分裂的时候，并不是直接将一个元素拉到上一层中，而是“复制”（这里说复制其实不准确，因为没有复制数据信息，只是有关键字的信息）一份放到上一层，同时本节点分裂，这样也就保证了在叶节点中是存了所有的数据（记录）的。
 
@@ -56,8 +56,8 @@ B+树是在B树基础上的一个改进，其基本定义与B树相同，差异�
 一般来说，索引本身也是比较大的（毕竟也是一棵树啊），不可能全部存储在内存中，而是以索引文件的形式存储在磁盘上。这样，在使用索引的时候就会产生I/O消耗。所以，尽量减少I/O操作次数是一个好的索引结构应该考虑的很重要的事情。所以，这就要涉及到计算机硬盘的一些操作原理。
 
 ### 磁盘存取原理
-![硬盘组成](https://github.com/zjuAJW/MarkdownPhoto/blob/master/disk.png?raw=true)
-![磁头和读取过程](https://github.com/zjuAJW/MarkdownPhoto/blob/master/diskIO.png?raw=true)
+![硬盘组成](/img/in-post/btree-and-db-index/disk.png)
+![磁头和读取过程](/img/in-post/btree-and-db-index/diskIO.png)
 如图所示，一个磁盘由大小相同且同轴的多个圆形盘片组成，它们可以同步转动。每一个盘片有正反两个盘面（surface），盘片中央有一个可旋转的主轴（Spindle）。每一个盘面被划分为多个同心圆，成为磁道（Tracks），多个盘面上下重合的磁道组成了一个柱面（Cylinder）。每一个磁道又被划分为多个扇区（Sectors），中间由一些间隔（gap）分开。每个扇区是硬盘的最小存储单元，通常为512字节。
 
 当需要读取数据时，系统会将数据逻辑地址传给磁盘，磁盘的控制电路按照寻址逻辑将逻辑地址翻译成物理地址，即确定要读的数据在哪个磁道，哪个扇区。为了读取这个扇区的数据，需要将磁头放到这个扇区上方，为了实现这一点，磁头需要移动对准相应磁道，这个过程叫做寻道，所耗费时间叫做寻道时间，然后磁盘旋转将目标扇区旋转到磁头下，这个过程耗费的时间叫做旋转时间。
@@ -108,3 +108,18 @@ InnoDB索引的一个重要特点是，其数据文件本身就是一个索引�
 聚集索引的实现方式使得按主键进行检索十分高效，但是辅助索引就要检索两遍了：首先检索辅助索引获得主键，然后利用主键检索获取记录。
 
 在知道了InnoDB的索引实现原理之后，就会对我们使用索引有一定的指导作用了。例如：不建议用过长的字段作为主键，因为所有的辅助索引都会引用主键，这样会让辅助索引变得很大。再例如：用非单调的地段作为主键在InnoDB中不是个好主意，因为非单调的主键在插入新纪录的时候会为了维持B+Tree的平衡而进行很多平衡操作，所以，建议用自增字段作为索引。
+
+### MyISAM索引实现
+这个引擎没有用过，但是他的索引实现和InnoDB完全不同，所以这里拿出来分析一下。
+
+MyISAM引擎同样适用B+树作为索引实现。下面是其原理图：
+
+![MyISAM索引原理图](/img/in-post/btree-and-db-index/myisam-priamry.png)
+
+从图中可以看到，MyISAM的索引文件只保存了数据的地址。而辅助索引和主索引没有区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。
+
+![MyISAM索引原理图](/img/in-post/btree-and-db-index/myisam-secondary.png)
+
+所以，MyISAM索引检索时先按照B+Tree搜索索引，获取到data域中存的地址后，读取相应的数据记录。
+
+MyISAM的这种索引方式也叫非聚集索引。
