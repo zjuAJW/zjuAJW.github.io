@@ -74,7 +74,7 @@ mongos会记录每个块中插入了多少数据，一旦达到了某个阈值�
 * 一个分片只能同时参与到一个块移动的过程，如果一个分片上有多个块想要被移动，那么只能一个一个地操作。但是，mongo是支持多个移动操作同时并发进行的，所以，对于一个有着n个分片的分片集群，最多一次可以执行n/2（向下取整）个块移动操作。
 * 只有在块数量最多的分片和数量最少的分片的差值达到移动阈值时，才会触发均衡操作。当任意两个分片上块的数量差小于2时，均衡过程结束。移动阈值的具体大小如下：
 
-![migration-threshold](/img/in-post/mongo-sharding/migration-threshold)
+![migration-threshold](/img/in-post/mongo-sharding/migration-threshold.PNG)
 
 
 
