@@ -1,11 +1,11 @@
 ---
 layout:     post
 title:      "最短路径&最小生成树&差分约束系统"
-subtitle:   "图中与最短路径相关的经典问题"
+subtitle:   "图中与最短距离相关的经典问题"
 date:       2017-09-08 17:00:00
 author:     "AJW"
 header-img: "img/tech.jpg"
-tags:	
+tags:
     - 数据结构
     - 算法
     - 图
