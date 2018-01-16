@@ -36,7 +36,7 @@ tags:
 
 ​	期间我也试过GBDT和RandomForest，但是结果都没有xgboost好。
 
-###　模型训练
+### 模型训练
 
 ​	模型训练直接用了GridSearchCV来进行参数选择，这里有一个需要注意的问题是，GridSearchCV后的模型是默认用全部的训练数据重新fit过一遍的。
 
