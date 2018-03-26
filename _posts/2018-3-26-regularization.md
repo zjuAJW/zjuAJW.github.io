@@ -38,11 +38,11 @@ $$s.t. E_R(\omega) \le \eta $$
 
 ![贝叶斯](\img\in-post\regularization\bayes1.png)
 
-其中$p(D|\omega)$是似然函数：参数向量w的情况下，观测数据D出现的概率
+其中$p(D\vert omega)$是似然函数：参数向量w的情况下，观测数据D出现的概率
 
 $p(\omega)$是参数向量的先验概率(prior)
 
-对于似然函数部分有$p(D|\omega) = \Pi_{k =1}^{n}p(D_i|\omega)$
+对于似然函数部分有$p(D\vert \omega) = \Pi_{k =1}^{n}p(D_i\vert \omega)$
 
 则，对后验概率取对数有
 
@@ -86,13 +86,13 @@ $p(\omega)$是参数向量的先验概率(prior)
 
 在知乎上看到了另外一个角度的解释，感觉也很好。
 
-假设原损失函数为$L(\omega)$, 那么L1正则为$L_1(\omega) = L(\omega) + C\lvert \omega\rvert$, L2正则化为$L_2(\omega) = L(\omega) + C\omega^2$
+假设原损失函数为$L(\omega)$, 那么L1正则为$L_1(\omega) = L(\omega) + C\vert \omega\vert$, L2正则化为$L_2(\omega) = L(\omega) + C\omega^2$
 
 两种正则化能不能把最优的$\omega$变成 0，取决于原先的费用函数在 0 点处的导数。
 
 如果本来导数$L'(0)​$不为 0，那么施加 L2 正则后导数$L_2'(0) = L'(0) + 2C * 0​$依然不为 0，最优的 $\omega​$也不会变成 0。
 
-而施加 L1 正则时，只要正则项的系数 C 大于原损失函数$L(\omega)$在 0 点处的导数的绝对值， $\omega = 0$ 就会变成一个极小值点。这里要解释一下，要使得$L_1(\omega)$在$\omega = 0$处取得极值，那么需要$\omega = 0$两边的导数异号。$\omega$从左边趋近于0 时，$C\lvert \omega\rvert$的导数是$-C$，从右边趋近于0时，$C\lvert\omega\rvert$的导数是$C$，所以$L_1$左右两边的导数分别为$L'(0) - C$和$L'(0) + C$，要保证两者异号，只需要保证$C\gt \lvert L'(0)\rvert$就可以了。
+而施加 L1 正则时，只要正则项的系数 C 大于原损失函数$L(\omega)$在 0 点处的导数的绝对值， $\omega = 0$ 就会变成一个极小值点。这里要解释一下，要使得$L_1(\omega)$在$\omega = 0$处取得极值，那么需要$\omega = 0$两边的导数异号。$\omega$从左边趋近于0 时，$C\vert \omega\vert$的导数是$-C$，从右边趋近于0时，$C\vert\omega\vert$的导数是$C$，所以$L_1$左右两边的导数分别为$L'(0) - C$和$L'(0) + C$，要保证两者异号，只需要保证$C\gt \vert L'(0)\vert$就可以了。
 
 所以L1正则的最优值更容易在参数为0时取得，这也就造成了L1比L2更容易得到稀疏解。
 
