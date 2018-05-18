@@ -16,7 +16,7 @@ tags:
 
 前三讲主要是一些基础的介绍，这里就不多说了，唯一需要注意的是整个课程对于machine learning的一个定义。
 
-![machine learning](img\in-post\machine- learning-fundation\ml.PNG)
+![machine learning](\img\in-post\machine- learning-fundation\ml.PNG)
 
 所谓machine learning，就是利用数据data，采用某种算法$$\cal A$$，从hypothesis set（后文基本都用$$\cal H$$来表示）中选择一个g，使得g和目标函数f非常接近。
 
@@ -26,11 +26,11 @@ tags:
 
 首先来看一个简单的例子
 
-![4_1](img\in-post\machine-learning-fundation\4_1.PNG)
+![4_1](\img\in-post\machine-learning-fundation\4_1.PNG)
 
 如图所示这样一个二分类的问题，我的hypothesis set其实一共只可能有2^8种，那我们从中选出一个g，使得在我们看到的这5个数据上，$$g(x_n)=y_n$$, 那么g和f就是很接近的吗？答案是否定的
 
-![4_2](img\in-post\machine-learning-fundation\4_2.PNG)
+![4_2](\img\in-post\machine-learning-fundation\4_2.PNG)
 
 在$$\cal H$$中，我们可以找到对于已知的五条数据，完全符合的g一共有8个，但是他们在未知的数据上，他们的表现就不一定了。也就是说，在已知数据D上，$$g \approx f$$是成立的，但是在D以外的数据上，$$g\approx f$$不一定成立。而机器学习目的，恰恰是希望我们选择的模型能在未知数据上的预测与真实结果是一致的，而不是在已知的数据集D上寻求最佳效果。 
 
@@ -42,11 +42,11 @@ tags:
 
 我们考虑这样一个问题：
 
-![4_3](img\in-post\machine-learning-fundation\4_3.PNG)
+![4_3](\img\in-post\machine-learning-fundation\4_3.PNG)
 
 假设一个罐子里装满了绿色和橙色的球，我们如何知道里边橙色球的比例？统计学上的做法是做一个抽样，然后用抽样出的球中橙色球的比例来估计真实的比例。为什么可以这样做？因为从概率的角度来看，样本中橙色球的比例$$\nu$$是很有可能接近于实际的橙色球比例$$\mu$$的，这就是**Hoeffding‘s Inequality**
 
-![4_4](img\in-post\machine-learning-fundation\4_4.PNG)
+![4_4](\img\in-post\machine-learning-fundation\4_4.PNG)
 
 Hoeffding‘s Inequality保证了在抽样样本N非常大的时候，$$\nu$$和$$\mu$$是非常接近的，这时我们称，$$\nu = \mu $$ 是probably approximately correct (PAC) 的。
 
@@ -54,11 +54,11 @@ Hoeffding‘s Inequality保证了在抽样样本N非常大的时候，$$\nu$$和
 
 那上边这个问题和machine learning有什么关系呢？我们可以把机器学习的概念对应过来。机器学习hypothesis与目标函数相等的可能性，类比于罐子中橙色球的概率问题；罐子里的一颗颗弹珠类比于机器学习样本空间x；橙色的弹珠类比于$$h(x)$$与$$f(x)$$不相等；绿色的弹珠类比于$$h(x)$$与$$f(x)$$相等；从罐子中抽取的N个球类比于机器学习的训练样本D，而且是独立同分布的。所以呢，如果样本N够大，且是独立同分布的，那么，从样本中$$h(x)\neq f(x)$$的概率就能推导在抽样样本外的所有样本中$$h(x)\neq f(x)$$的概率是多少。 
 
-![4_5](img\in-post\machine-learning-fundation\4_5.PNG)
+![4_5](\img\in-post\machine-learning-fundation\4_5.PNG)
 
 这里定义两个量：$$E_{in}(h)$$表示在抽样样本上，$$h(x)\neq f(x)$$的概率，而$$E_{out}$$表示在所有样本上，$$h(x)\neq f(x)$$的概率。那么，对于某一个**固定的h**， 根据Hoeffding‘s Inequality， 我么可以得到，$$E_{in}(h)$$和$$E_{out}(h)$$在N很大的时候，是PAC的。
 
-![4_6](img\in-post\machine-learning-fundation\4_6.PNG)
+![4_6](\img\in-post\machine-learning-fundation\4_6.PNG)
 
 但是要注意一点，这里只是说$$E_{in}(h)$$和$$E_{out}(h)$$非常接近，但$$E_{in}(h)$$并不一定是最小的，因此我们只是说可以利用这一点，来验证某一个h的表现是怎样的。
 
@@ -68,19 +68,19 @@ Hoeffding‘s Inequality保证了在抽样样本N非常大的时候，$$\nu$$和
 
 先来看一个例子，假设现在有150个人抛硬币，没人抛5次，其中一个人5次都是正面，我们能说这个人的硬币抛出正面的概率比较大吗？
 
-![4_7](img\in-post\machine-learning-fundation\4_7.PNG)
+![4_7](\img\in-post\machine-learning-fundation\4_7.PNG)
 
 答案是否定的，我们可以看到，在每个硬币都均匀的情况下，150个人中至少有一个人抛出5个正面的概率其实是非常大的。对应到我们的学习过程中，可能每个h的$$E_{out}(h)$$其实都是1/2，但是其中某个h在样本上全部都是正确的，但我们并不能说这个h是好的。
 
 Hoeffding不等式告诉我们什么呢？对于一个h来说，它在样本数据上的错误率和在所有样本上的错误率大概率是相等的。也就是说，假如我们从样本空间中抽样抽非常多次，得到很多很多不同的样本出来，那么在这些样本上，h只在很少一部分上会出现$$E_{in}(h)$$和$$E_{out}(h)$$差别很大的情况，我们称这样的抽样为BAD sample，对应的样本数据为BAD data。对应到下图，Hoeffding不等式保证了，**对于每一行**（也就是每一个h），其中BAD的格子数量是很少的。
 
-![4_8](img\in-post\machine-learning-fundation\4_8.PNG)
+![4_8](\img\in-post\machine-learning-fundation\4_8.PNG)
 
 那如果现在我有很多h，对于表格中的某一列而言（也就是某种样本数据D），如果其中有一个格子是BAD的，那么我的算法就不能自由地从所有的h中去选择，因为可能踩到坑，也就是这个D对于某个h而言可能是BAD的，例如，可能$$h_1$$其实是一个很好的方程，但由于BAD sample，导致$$h_1$$在这个D上的$$E_{in}(h_1)$$很大，但$$E_{out}(h_1)$$其实很小，那么$$\cal A$$可能就不会选$$h_1$$了。同样的，可能$$h_2$$是一个不好的方程，但由于BAD sample，导致$$h_1$$在这个D上的$$E_{in}(h_2)$$很小，但其实$$E_{out}(h_2)$$很大，$$\cal A$$可能会误选$$h_2$$作为g。
 
 如果$$\cal H$$中有任意个h遇到BAD data，我们的$$\cal A$$在挑选h的时候就会遇到麻烦，那么出现这种情况的概率是多少呢？见下图：
 
-![4_9](img\in-post\machine-learning-fundation\4_9.PNG)
+![4_9](\img\in-post\machine-learning-fundation\4_9.PNG)
 
 其中M是h的数量，也就是$$\cal H$$的大小。
 
