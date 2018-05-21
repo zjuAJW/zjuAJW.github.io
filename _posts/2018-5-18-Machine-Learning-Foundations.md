@@ -12,11 +12,11 @@ tags:
 
 林轩田老师的课程是接触机器学习开始就知道的，但是当时对于初学者的我其实有点难，所以没有看下去，马上要到找工作的时候了，想要把这个经典课程看一下，顺便复习一些基础知识，夯实一下基础。
 
-## 前三讲
+## Lecture 1 2 3
 
 前三讲主要是一些基础的介绍，这里就不多说了，唯一需要注意的是整个课程对于machine learning的一个定义。
 
-![machine learning](\img\in-post\machine- learning-fundation\ml.PNG)
+![machine learning](\img\in-post\machine-learning-fundation\ml.PNG)
 
 所谓machine learning，就是利用数据data，采用某种算法$$\cal A$$，从hypothesis set（后文基本都用$$\cal H$$来表示）中选择一个g，使得g和目标函数f非常接近。
 
@@ -66,7 +66,7 @@ Hoeffding‘s Inequality保证了在抽样样本N非常大的时候，$$\nu$$和
 
 之前我们一直都是在说固定一个h的情况，那么现在问题来了，现在有很多个假设h，其中一个h在样本数据上的输出全部都是正确的，我们要不要选择这个h来作为最后的g呢？
 
-先来看一个例子，假设现在有150个人抛硬币，没人抛5次，其中一个人5次都是正面，我们能说这个人的硬币抛出正面的概率比较大吗？
+先来看一个例子，假设现在有150个人抛硬币，每人抛5次，其中一个人5次都是正面，我们能说这个人的硬币抛出正面的概率比较大吗？
 
 ![4_7](\img\in-post\machine-learning-fundation\4_7.PNG)
 
@@ -86,6 +86,72 @@ Hoeffding不等式告诉我们什么呢？对于一个h来说，它在样本数�
 
 这样我们得到了一个上界，所以在M有限的情况下，N够大情况下，我们可以保证D对于每一个h都不是BAD的。
 
-进而，我们似乎就可以做到一些Learning了：假如我们的**$$\cal H$$是有限的**，并且数据量足够大，那么不管我们的算法怎么选，都可以保证$$E_{in}(h)$$和$$E_{out}(h)$$都是接近的，那么我们就可以从所有的h中选择一个$$E_{in}(h)$$最小的来作为我们的g了。
+进而，我们似乎就可以做到一些Learning了：假如我们的**$$\cal H$$是有限的**，并且**数据量足够大**，那么不管我们的算法怎么选，都可以保证$$E_{in}(h)$$和$$E_{out}(h)$$都是接近的，那么我们就可以从所有的h中选择一个$$E_{in}(h)$$最小的来作为我们的g了。
 
 那么问题又来了，大部分情况下，$$\cal H$$并不是有限的，这时候，我们还能够学习到知识吗？这个要等到后面的课程来解决了。
+
+
+
+## Lecture 5
+
+根据前几节的讨论，我们可以把机器学习转化为两个核心问题：
+
+1. 我们能否保证$$E_{in}(h)$$和$$E_{out}(h)$$是接近的
+2. 我们能不能使$$E_{in}(h)$$足够小
+
+这里我们会遇到一个两难的问题：
+
+* 要保证$$E_{in}(h)$$和$$E_{out}(h)$$是接近的，那么$$\cal H$$的大小M要是有限的，这样，我们可选的h就很少了，不能保证一定有$$E_{in}(h)$$很小
+* 如果我们的M很大，那么我们可选的h就很多，选择到$$E_{in}(h)$$很小的h的可能性就很大，但是这样我们又不能够保证$$E_{in}(h)$$和$$E_{out}(h)$$是接近的。
+
+可见这个**M**的值非常的重要，接下来的几节课也一直在围绕这个M的值展开，同时还有与M有关的这个关键的不等式，我在这里再写一遍：
+$$
+\mathbb{P}[| E_{in}(g) - E_{out}(g) | \gt \epsilon] \leq 2\cdot M \cdot exp(-2\epsilon ^2N)
+$$
+
+### Effective Number of Lines
+
+首先我们来回忆一下这个M是从哪里来的。
+
+在我们对上面那个公式进行推导的时候，我们用了一个Union Bound
+
+![5-1](\img\in-post\machine-learning-fundation\5-1.PNG)
+
+公式中等号成立的条件是什么？条件是各个事件是互斥的，也就是没有交集。但是实际上，我们的hypothesis有一些是非常相似的，对于这些相似的hypothesis，往往他们的Bad Data也是相似的，也就是说各个hypothesis遇到Bad Sample这件事并不是互斥的，是有overlapping的，在这种情况下，我们使用union bound其实是过分的估计了P的上限。
+
+![5-2](\img\in-post\machine-learning-fundation\5-2.PNG)
+
+既然如此，我们为什么不把相似的hypothesis归为一类呢？
+
+比如，对于平面上的线性二分类问题，我们的$$\cal H$$是平面上的所有直线，这个集合是无穷大的。但如果现在我们只有一个数据点，那么这些直线其实可以分为两类，一类将点分为圈圈，一类分为叉叉。
+
+![5-3](\img\in-post\machine-learning-fundation\5-3.PNG)
+
+同样的，如果有两个点，那我们的直线可以分为4类
+
+![5-4](\img\in-post\machine-learning-fundation\5-4.PNG)
+
+三个点，我们的直线最多可以分为8类
+
+![5-5](\img\in-post\machine-learning-fundation\5-5.PNG)
+
+但是有一点要注意，如果三点共线的话，有两种情况我们是得不到的，但是我们这里考虑**最多**可能的情况。
+
+![5-6](\img\in-post\machine-learning-fundation\5-6.PNG)
+
+四个点的时候，同样的道理，我们最多可以得到14种不同的直线
+
+![5-7](\img\in-post\machine-learning-fundation\5-7.PNG)
+
+因此，对于平面上的二分类问题，表面上看我们是要从无限多条直线中去选择一条出来，但其实有相当多的直线产生的结果是一样的。这些直线也将同时遇到Bad Data或者不遇到Bad Data。因此，之前我们估计的遭遇Bad Sample的概率是明显被夸大了的，我们的M可以用**Effective number of Lines**，也就是可能的直线的种类数，来替代，这样子，在有无限多直线的情况下，我们也可以也可以做到learning了。
+
+![5-8](\img\in-post\machine-learning-fundation\5-8.PNG)
+
+### Effective Number of Hypothesis
+
+这里我们首先给出一个定义，dichotomy。简单来说，dichotomy就是给定一组输入数据x，任意从$$\cal H$$中选择一个h，来对x进行分类，得到的一个输出就是一个dichotomy。不难得出，一个h必定会对应一个dichotomy，但一个dichotomy可能会对应多个h，我们把一个dichotomy对应的所有h视为一类，那么其实上一节提到的Effective Number of Lines其实就等于不同dichotomy的数量。
+
+那么$$\cal H$$作用与$$\cal D$$最多能产生多少种不同的dichotomy呢，显然，这和$$\cal H$$有关，和数据量N有关，也和具体的输入数据有关。比如上一节中，当N =1时，dichotomy有两种；当N =2时，dichotomy有4种；当N=3时，dichotomy**最多**有8种，但也可能只有6种；当N = 4时，dichotomy最多有14种。这里，我们把这个**最多**的数量成为**成长函数**，显然，当$$\cal H$$固定的情况下，成长函数是关于N的一个函数，而且对于我们的二分类问题来说，一定是小于$$2^N$$的。
+
+![5-9](\img\in-post\machine-learning-fundation\5-9.PNG)
+
