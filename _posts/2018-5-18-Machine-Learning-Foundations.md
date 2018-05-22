@@ -92,7 +92,7 @@ Hoeffding不等式告诉我们什么呢？对于一个h来说，它在样本数�
 
 
 
-## Lecture 5
+## Lecture 5 Training versus Testing 
 
 根据前几节的讨论，我们可以把机器学习转化为两个核心问题：
 
@@ -108,6 +108,7 @@ Hoeffding不等式告诉我们什么呢？对于一个h来说，它在样本数�
 $$
 \mathbb{P}[| E_{in}(g) - E_{out}(g) | \gt \epsilon] \leq 2\cdot M \cdot exp(-2\epsilon ^2N)
 $$
+
 
 ### Effective Number of Lines
 
@@ -143,7 +144,7 @@ $$
 
 ![5-7](\img\in-post\machine-learning-fundation\5-7.PNG)
 
-因此，对于平面上的二分类问题，表面上看我们是要从无限多条直线中去选择一条出来，但其实有相当多的直线产生的结果是一样的。这些直线也将同时遇到Bad Data或者不遇到Bad Data。因此，之前我们估计的遭遇Bad Sample的概率是明显被夸大了的，我们的M可以用**Effective number of Lines**，也就是可能的直线的种类数，来替代，这样子，在有无限多直线的情况下，我们也可以也可以做到learning了。
+因此，对于平面上的二分类问题，表面上看我们是要从无限多条直线中去选择一条出来，但其实有相当多的直线产生的结果是一样的。这些直线也将同时遇到Bad Data或者不遇到Bad Data。因此，之前我们估计的遭遇Bad Sample的概率是明显被夸大了的，我们的M可以用**Effective number of Lines**，也就是可能的直线的种类数，来替代，这样子，在有无限多直线的情况下，我们似乎也可以做到learning了。
 
 ![5-8](\img\in-post\machine-learning-fundation\5-8.PNG)
 
@@ -151,7 +152,107 @@ $$
 
 这里我们首先给出一个定义，dichotomy。简单来说，dichotomy就是给定一组输入数据x，任意从$$\cal H$$中选择一个h，来对x进行分类，得到的一个输出就是一个dichotomy。不难得出，一个h必定会对应一个dichotomy，但一个dichotomy可能会对应多个h，我们把一个dichotomy对应的所有h视为一类，那么其实上一节提到的Effective Number of Lines其实就等于不同dichotomy的数量。
 
-那么$$\cal H$$作用与$$\cal D$$最多能产生多少种不同的dichotomy呢，显然，这和$$\cal H$$有关，和数据量N有关，也和具体的输入数据有关。比如上一节中，当N =1时，dichotomy有两种；当N =2时，dichotomy有4种；当N=3时，dichotomy**最多**有8种，但也可能只有6种；当N = 4时，dichotomy最多有14种。这里，我们把这个**最多**的数量成为**成长函数**，显然，当$$\cal H$$固定的情况下，成长函数是关于N的一个函数，而且对于我们的二分类问题来说，一定是小于$$2^N$$的。
+那么$$\cal H$$作用与$$\cal D$$最多能产生多少种不同的dichotomy呢，显然，这和$$\cal H$$有关，和数据量N有关，也和具体的输入数据有关。比如上一节中，当N =1时，dichotomy有两种；当N =2时，dichotomy有4种；当N=3时，dichotomy**最多**有8种，但也可能只有6种；当N = 4时，dichotomy最多有14种。这里，我们把这个**最多**的数量称为**成长函数(Growth function)，$$m_{\cal H}(N)$$**，显然，当$$\cal H$$固定的情况下，成长函数是关于N的一个函数，而且对于我们的二分类问题来说，一定是小于等于$$2^N$$的。如果$$m_{\cal H}(N) =2^N$$，那么我们称这N个输入被$$\cal H$$**shatter**掉了
 
 ![5-9](\img\in-post\machine-learning-fundation\5-9.PNG)
+
+下面给出几个成长函数的例子，这里只给出结果，具体的推导可以看一下PPT或者视频哈
+
+![5-10](\img\in-post\machine-learning-fundation\5-10.PNG)
+
+OK，那像我们上一节对平面线形二分类的讨论一样，对于一个一般化的问题我们可以用这个成长函数**$$m_{\cal H}(N)$$**来替代公式里的M
+
+![5-11](\img\in-post\machine-learning-fundation\5-11.PNG)
+
+那么，可以看到，如果$$\m_{\cal H}(N)$$是一个多项式的话，它的增长速度是没有后边的指数项的衰减速度快的，所以不等式的右边随着N的增大可以衰减到接近于０，这对我们来说是好的。之前列出的Positive rays，positive intervals等等，它们的$$\m_{\cal H}(N)$$可以很容易得到，但是有些$$\cal H$$的成长函数则没有那么容易得到，比如我们一直在讨论的线性二分类问题。那么对于这样的$$\cal H$$，我们怎么办呢？
+
+### Break Point
+
+虽然现在我们不太容易得到2D perceptron成长函数的解析形式，不知道它是不是多项式型的，但是我们知道在N为某些值时，它是小于$$2^N$$的（也就是不能被shatter），我们称这样的N为**Break Point**。比如，2D perceptron在N=4的时候，是一个Break Point，那么其实在N > 4的时候，所有的N都是Break Point，所以后文我们的Break Point都是指最小的那个。
+
+同样的，对于我们之前讨论的几个问题，都可以得到它们的Break Point
+
+![5-11](\img\in-post\machine-learning-fundation\5-12.PNG)
+
+从这里，我们似乎可以发现一线希望，对于有Break Point的$$\cal H$$来说，好像他们的$$\m_{\cal H}(N)$$都是多项式的，而且多项式的最高次是$$N^{k-1}$$。那么，这个结论是不是对的呢，且听下回分解。
+
+## Lecture 6 Theory of Generalization
+
+上节说到，对于有Break Point的$$\cal H$$，我们似乎可以用这个break point来做一点事情。所以这一节，我们关注的重点集中在这个break point上。
+
+### Restriction of Break Point
+
+先来看一个例子。我们知道，不管我的$$\cal H$$是什么，如果它最小的break point为2（$$k=2$$），那么说明$$\m_{\cal H}(2)<4$$，也就是说$$\m_{\cal H}(2)$$最大也就是3。那么N=3的时候呢？从break point的定义来说，$$k=2$$意味着，任意两个数据点都不能被shatter，还记得shatter的概念吗？意思就是我产生的dichotomies不能完全包含任何2个数据点所有的排列组合。 我们一个一个地来添加dichotomy，看看N=3的时候dichotomy的数量会有什么限制。
+
+![6-1](\img\in-post\machine-learning-fundation\6-1.PNG)
+
+![6-2](\img\in-post\machine-learning-fundation\6-2.PNG)
+
+![6-3](\img\in-post\machine-learning-fundation\6-3.PNG)
+
+当有三个dichotomy的时候，任意两个数据点都不能被shatter。但当加入第四个的时候，就可能会有问题了。
+
+![6-4](\img\in-post\machine-learning-fundation\6-4.PNG)
+
+这时候可以发现，$$x_2$$和$$x_3$$全部可能的排列组合都出现了，也就是被shatter了，这是不符合break point为2这个条件的，所以我们不能产生这个dichotomy。但是我可以换另一种dichotomy，就不会有问题。
+
+![6-5](\img\in-post\machine-learning-fundation\6-5.PNG)
+
+当我们继续添加第五个dichotomy的时候，你会发现，无论添加什么，都会导致有两个数据点被shatter的情况，所以，在N=3， k=2的情况下，可能产生的dichotomy的数量，最多最多只有4个。可见，这个break point对于$$m_{\cal H}(N)$$可能的最大值还是有一定的限制作用的。也就是说，虽然我们不能直接得到$$m_{\cal H}(N)$$的表达式，但是在知道break point的情况下，我们似乎能够得到$$m_{\cal H}(N)$$的一个上界。我们记这个上界为$$B(N, k)$$，称它为Bounding function。上边的讨论显示，$$B(2,2)=3$$，而$$B(3,2)=4$$。
+
+### Bounding Function
+
+那么，美妙的事情就发生了，我们不能得到$$m_{\cal H}(N)$$，但我们可以去研究这个Bounding Function，只要$$B(N,k)$$是多项式的，那么我们的$$m_{\cal H}(N)$$就也是多项式的了。
+
+不难知道：
+
+- $$k=1$$时，1个点(2种排列组合)都没有办法shatter，因此$$B(N,1)$$恒等于1。
+- $$N<k$$时，$$\cal H$$一定能shatter掉$$N$$个点，因此它产生的dichotomies的种类等于这$$N$$个点所有的排列组合数$$2^N$$。
+- $$k=N$$时，从$$N^2$$个排列组合中移除掉一个，剩下的都可以作为dichotomies，因此它产生的dichotomies的数量**最多最多**可以是$$2^{N−1}$$。
+
+加上之前我们得到的结论$$B(3,2)=4$$，我们可以得到下面这个表
+
+![6-6](\img\in-post\machine-learning-fundation\6-6.PNG)
+
+接下来的问题就是，整个表的 左下这部分的值是多少？比如$$B(4,3)$$的值，我们能够根据其他值来推导出来吗？
+
+算不出来我们可以穷举一下嘛！$$N=4$$的情况下，各种各样dichotomy的组合一共也就$$2^{2^4}$$种。经过一番穷举之后，我们发现，$$B(4, 3)=11$$，具体的dichotomy的组合如下图所示。
+
+![6-7](\img\in-post\machine-learning-fundation\6-7.PNG)
+
+我们把结果做一个简单的顺序变化，变成右图，其中橙色部分是成对出现的，紫色部分是单独出现的。我们先不看$$x_4$$，橙色部分因此可以分为两部分，写为$$2\alpha$$，紫色部分写为$$\beta$$， 那么$$B(4,3)=11=2\alpha + \beta$$。
+
+根据定义，$$B(4,3)$$是不允许任意三个点被shatter的。我们拿出一个$$\alpha$$和$$\beta$$组成的这一部分，可以看作是对三个点的dichotomies，而这三个点是不能被shatter的，所以可以得到$$\alpha + \beta \le B(3,3)$$。
+
+![6-8](\img\in-post\machine-learning-fundation\6-8.PNG)
+
+对于剩下的另一部分$$\alpha$$，它们的$$x_4$$是成对的，所以，它们中的任意2个点都不能被shatter，否则，加上$$x_4$$，就会有三个点被shatter了，所以$$\alpha \le B(3,2)$$。
+
+![6-9](\img\in-post\machine-learning-fundation\6-9.PNG)
+
+将两部分合起来，就可以得到$$B(4,3)=2\alpha + \beta \le B(3,3)+B(3,2)$$
+
+这样一来，我们就可以把之前那张表填完整了
+
+![6-9](\img\in-post\machine-learning-fundation\6-10.PNG)
+
+最终，通过数学归纳法，其实可以证明，$$B(N,k)\le \sum_{i=0}^{k-1}\binom {N}{i}$$
+
+当$$k=1$$时不等式恒成立，因此只要讨论$$k\ge 2$$的情形。$$N=1$$时，不等式成立，假设$$N\le N_o$$时对于所有的$$k$$不等式都成立，则我们需要证明当$$N=N_o+1$$时，不等式也成立。根据前面得到的结论，有： 
+$$
+\begin{aligned}
+B(N_{o}+1,k) &\leq B(N_{o},k) + B(N_{o},k-1) \\\
+&\leq \sum_{i=0}^{k-1}\binom{N_{o}}{i}+\sum_{i=0}^{k-2}\binom{N_{o}}{i} \\\
+&=1+\sum_{i=1}^{k-1}\binom{N_{o}}{i}+\sum_{i=1}^{k-1}\binom{N_{o}}{i-1} \\\
+&=1+\sum_{i=1}^{k-1}[\binom{N_{o}}{i}+\binom{N_{o}}{i-1}] \\\
+&=1+\sum_{i=1}^{k-1}\binom{N_{o}+1}{i}=\sum_{i=0}^{k-1}\binom{N_{o}+1}{i}
+\end{aligned}
+$$
+因此当$$N=N_o+1$$时，不等式也成立。 
+
+这样，我们成长函数的上界Bounding Function被bound住了，我们的成长函数自然也就被bound住，因此对于break point为k的成长函数而言，有：$$m_{\cal {H}}\le \sum_{i=0}^{k-1}\binom {N}{i}$$。这个公式的右边其实是一个最高次为$$k-1$$的多项式，所以对于我们最一开始讨论的2D perceptron而言，它的break point是4，所以它的成长函数会被$$B(N,4)$$给bound住。
+$$
+m_{\mathcal{H}}\leq \sum_{i=0}^{4-1}\binom {N}{i}=\frac{1}{6}N^3+\frac{5}{6}N+1
+$$
+所以，lecture 5和lecture 6差不多帮我们解决了$$\cal H$$无限大的问题：虽然$$\cal H$$看上去是无限大的，但实际有效的h是有限的，我们用成长函数来描述有效的h的数量，并通过break point去寻找它的一个上界，从而将成长函数bound在一个多项式的成长速度上。
 
