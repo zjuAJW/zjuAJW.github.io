@@ -260,3 +260,73 @@ m_{\mathcal{H}}\leq \sum_{i=0}^{4-1}\binom {N}{i}=\frac{1}{6}N^3+\frac{5}{6}N+1
 $$
 所以，lecture 5和lecture 6差不多帮我们解决了$$\cal H$$无限大的问题：虽然$$\cal H$$看上去是无限大的，但实际有效的h是有限的，我们用成长函数来描述有效的h的数量，并通过break point去寻找它的一个上界，从而将成长函数bound在一个多项式的成长速度上。
 
+## Lecture 7 The VC Dimension
+
+上一节我们说到，我们可以利用有限的$$m_{\cal H}(N)$$来替代无限大的M，得到$$\cal H$$遇到bad data的概率上界：
+
+
+$$
+\mathbb{P}_\mathcal{D}[BAD\ D]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)
+$$
+其中$$\mathbb{P}_{\cal D}[BAD D]\$$是所有有效的方程(Effective Hypotheses)遇到Bad Sample的联合概率，即$$\cal H$$中存在一个方程遇上bad sample，则说$$\cal H$$遇上bad sample。用更加精准的数学符号来表示上面的不等式： 
+$$
+\mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)
+$$
+
+
+但事实上上面的不等式是不严谨的，为什么呢？$$m_{\cal H}(N)$$描述的是$$\cal H$$作用于数据量为$$N$$的资料$$D$$，有效的方程数，因此$$H$$当中每一个$$h$$作用于$$D$$都能算出一个$$E_{in}(h)$$来，一共能有$$m_{\cal H}(N)$$个不同的$$E_{in}(h)$$，是一个有限的数。但在out of sample的世界里(总体)，往往存在无限多个点，平面中任意一条直线，随便转一转动一动，就能产生一个不同的$$E_{out}(h)$$来。$$E_{in}(h)$$的可能取值是有限个的，而$$E_{out}(h)$$的可能取值是无限的，无法直接套用union bound，我们得先把上面那个无限多种可能的$$E_{out}(h)$$换掉。那么如何把$$E_{out}(h)$$变成有限个呢？ 
+
+这里我想偷个懒了，因为整个证明实在是太需要技巧性了，说实话我一个数学渣渣也没怎么看下去，所以这里直接给出一个结论，就是**VC-Bound**:
+
+
+$$
+\begin{aligned}
+\mathbb{P}[BAD] &= \mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon] \\\
+&\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N)
+\end{aligned}
+$$
+所以，有了以上的这些讨论，我们可以得到，如果我们的$$m_{\cal H}(N)$$有breaks at k，并且N足够大，那么我们就可以保证$$E_{in}=E_{out}$$，如果我们的算法$$\cal A$$又能够选择到一个$$E_{in}$$很小的h的话，我们就可以做到学习啦：-）！
+
+### VC dimension
+
+VC dimension的定义其实就是最大的非break point值，也就是使得$$m_{\cal H}(N)=2^N$$的最大的N的值。我们记VC dimension为$$d_{vc}$$
+
+![7-1](\img\in-post\machine-learning-fundation\7-1.PNG)
+
+下图是我们之前讨论过的一些$$\cal H$$的VC维
+
+![7-2](\img\in-post\machine-learning-fundation\7-2.PNG)
+
+但这里我们要注意，通过成长函数来求VC维没什么太大的意义，因为我们通常很难得到某个$$\cal H$$的成长函数，而是希望能够得到VC维，从而来用$$N_{d_{vc}}$$bound住成长函数。那么如何来求$$d_{vc}$$呢？
+
+从物理意义上来讲，VC维可以近似看作是$$\cal H$$的自由度大小，或者说参数的个数，对于上面所说的几个$$\H$$都是成立的。
+
+回到我们机器学习的两个关键问题，$$E_{in}$$和$$E_{out}$$是否接近，以及$$E_{in}$$能否足够小。那么我们的$$d_{vc}$是如何影响这两个问题的呢？
+
+![7-3](\img\in-post\machine-learning-fundation\7-3.PNG)
+
+和之前分析M的大小类似，这两个条件似乎总是相抵触的，所以我们需要找到一个平衡点。
+
+### VC维与模型复杂度
+
+$$
+\begin{aligned}
+\mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon] \leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N)
+\end{aligned}
+$$
+
+回忆我们VC Bound的不等式，我们另不等式右边为$$\delta$$，也就是说坏事发生的概率小于$$\dalta$$，那么好事发生的概率就会大于$$1-\delta$$。这里我们做一个简单的数学推导，可以得到$$\epsilon$$的表达式。
+
+![7-4](\img\in-post\machine-learning-fundation\7-4.PNG)
+
+因此$$E_{in}$$和$$E_{out}$$又会有下面的关系
+
+![7-5](\img\in-post\machine-learning-fundation\7-5.PNG)
+
+我们把根号那一项看作是模型的复杂度，可以看到，$$d_{vc}$$越大，模型的复杂度越高，但是$$d_{vc}$$越大，$$E_{in}$$会越小，所以，我们需要在两者之间找到一个平衡点，找到一个合适的$$d_{vc}$$
+
+![7-6](\img\in-post\machine-learning-fundation\7-6.PNG)
+
+
+
+反过来，如果我们需要使用$$d_{vc}=3$$这种复杂程度的模型，并且想保证$$\epsilon=0.1$$，置信度$$1-\delta=90%$$，我们也可以通过VC Bound来求得大致需要的数据量$$N$$。通过简单的计算可以得到理论上，我们需要$$Napprox 10,000d_{vc}$$笔数据，但VC Bound事实上是一个极为宽松的bound，因为它对于任何演算法$$\cal A$$，任何分布的数据，任何目标函数$$\f$$都成立，所以经验上，常常认为$$N\approx 10d_{vc}$$就可以有不错的结果。 
