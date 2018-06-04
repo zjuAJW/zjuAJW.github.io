@@ -62,3 +62,5 @@ $$
 
 可以看到它们都是趋向于$$\sigma ^2$$（noise level）的，也就说明$$E_{in}$$和$$E_{out}$$的误差是被大概$$\frac{2(d+1)}{N}$$bound住的，这有点类似于之前说的VC bound，也是提供了一个学习可行性的保障。
 
+## Lecture 10 Logistic Regression
+
