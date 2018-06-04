@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "机器学习基石笔记"
-subtitle:   "夯实基础"
+title:      "机器学习基石笔记(1)"
+subtitle:   "VC维理论"
 date:       2018-05-18 10:00:00
 author:     "AJW"
 header-img: "img/tech.jpg"
@@ -174,7 +174,7 @@ OK，那像我们上一节对平面线形二分类的讨论一样，对于一个
 
 ![5-11](\img\in-post\machine-learning-fundation\5-12.PNG)
 
-从这里，我们似乎可以发现一线希望，对于有Break Point的$$\cal H$$来说，好像他们的$$\m_{\cal H}(N)$$都是多项式的，而且多项式的最高次是$$N^{k-1}$$。那么，这个结论是不是对的呢，且听下回分解。
+从这里，我们似乎可以发现一线希望，对于有Break Point的$$\cal H$$来说，好像他们的$$m_{\cal H}(N)$$都是多项式的，而且多项式的最高次是$$N^{k-1}$$。那么，这个结论是不是对的呢，且听下回分解。
 
 ## Lecture 6 Theory of Generalization
 
@@ -182,7 +182,7 @@ OK，那像我们上一节对平面线形二分类的讨论一样，对于一个
 
 ### Restriction of Break Point
 
-先来看一个例子。我们知道，不管我的$$\cal H$$是什么，如果它最小的break point为2（$$k=2$$），那么说明$$\m_{\cal H}(2)<4$$，也就是说$$\m_{\cal H}(2)$$最大也就是3。那么N=3的时候呢？从break point的定义来说，$$k=2$$意味着，任意两个数据点都不能被shatter，还记得shatter的概念吗？意思就是我产生的dichotomies不能完全包含任何2个数据点所有的排列组合。 我们一个一个地来添加dichotomy，看看N=3的时候dichotomy的数量会有什么限制。
+先来看一个例子。我们知道，不管我的$$\cal H$$是什么，如果它最小的break point为2（$$k=2$$），那么说明$$m_{\cal H}(2)<4$$，也就是说$$m_{\cal H}(2)$$最大也就是3。那么N=3的时候呢？从break point的定义来说，$$k=2$$意味着，任意两个数据点都不能被shatter，还记得shatter的概念吗？意思就是我产生的dichotomies不能完全包含任何2个数据点所有的排列组合。 我们一个一个地来添加dichotomy，看看N=3的时候dichotomy的数量会有什么限制。
 
 ![6-1](\img\in-post\machine-learning-fundation\6-1.PNG)
 
@@ -268,7 +268,7 @@ $$
 $$
 \mathbb{P}_\mathcal{D}[BAD\ D]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)
 $$
-其中$$\mathbb{P}_{\cal D}[BAD D]\$$是所有有效的方程(Effective Hypotheses)遇到Bad Sample的联合概率，即$$\cal H$$中存在一个方程遇上bad sample，则说$$\cal H$$遇上bad sample。用更加精准的数学符号来表示上面的不等式： 
+其中$$\mathbb{P}_{\cal D}[BAD\ D]$$是所有有效的方程(Effective Hypotheses)遇到Bad Sample的联合概率，即$$\cal H$$中存在一个方程遇上bad sample，则说$$\cal H$$遇上bad sample。用更加精准的数学符号来表示上面的不等式： 
 $$
 \mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon]\leq 2m_{\mathcal{H}}(N)\cdot exp(-2\epsilon ^2N)
 $$
@@ -283,6 +283,7 @@ $$
 \begin{aligned}
 \mathbb{P}[BAD] &= \mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon] \\\
 &\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N)
+
 \end{aligned}
 $$
 所以，有了以上的这些讨论，我们可以得到，如果我们的$$m_{\cal H}(N)$$有breaks at k，并且N足够大，那么我们就可以保证$$E_{in}=E_{out}$$，如果我们的算法$$\cal A$$又能够选择到一个$$E_{in}$$很小的h的话，我们就可以做到学习啦：-）！
@@ -315,7 +316,7 @@ $$
 \end{aligned}
 $$
 
-回忆我们VC Bound的不等式，我们另不等式右边为$$\delta$$，也就是说坏事发生的概率小于$$\dalta$$，那么好事发生的概率就会大于$$1-\delta$$。这里我们做一个简单的数学推导，可以得到$$\epsilon$$的表达式。
+回忆我们VC Bound的不等式，我们另不等式右边为$$\delta$$，也就是说坏事发生的概率小于$$\delta$$，那么好事发生的概率就会大于$$1-\delta$$。这里我们做一个简单的数学推导，可以得到$$\epsilon$$的表达式。
 
 ![7-4](\img\in-post\machine-learning-fundation\7-4.PNG)
 
@@ -329,4 +330,30 @@ $$
 
 
 
-反过来，如果我们需要使用$$d_{vc}=3$$这种复杂程度的模型，并且想保证$$\epsilon=0.1$$，置信度$$1-\delta=90%$$，我们也可以通过VC Bound来求得大致需要的数据量$$N$$。通过简单的计算可以得到理论上，我们需要$$Napprox 10,000d_{vc}$$笔数据，但VC Bound事实上是一个极为宽松的bound，因为它对于任何演算法$$\cal A$$，任何分布的数据，任何目标函数$$\f$$都成立，所以经验上，常常认为$$N\approx 10d_{vc}$$就可以有不错的结果。 
+反过来，如果我们需要使用$$d_{vc}=3$$这种复杂程度的模型，并且想保证$$\epsilon=0.1$$，置信度$$1-\delta=90%$$，我们也可以通过VC Bound来求得大致需要的数据量$$N$$。通过简单的计算可以得到理论上，我们需要$$Napprox 10,000d_{vc}$$笔数据，但VC Bound事实上是一个极为宽松的bound，因为它对于任何演算法$$\cal A$$，任何分布的数据，任何目标函数$$f$$都成立，所以经验上，常常认为$$N\approx 10d_{vc}$$就可以有不错的结果。 
+
+## Lecture 8 Noise and Error    
+
+### 确定性 v.s. 概率性
+
+![8-1](\img\in-post\machine-learning-fundation\8-1.PNG)
+
+回忆我们在课程一开始就建立的机器学习的整个框架，我们是假设有一个确定的目标函数$$f$$，而我们的目标是找到一个$$g$$，使得$$g$$尽可能和$$f$$接近。在这个过程中，我们是默认数据$$D$$是由$$f$$产生的，但是实际上，我们的数据通常是有噪声存在的，主要表现在三个方面：
+
+* noise in y：本来应该是圈圈的样本，结果标成了叉叉
+* noise in y：相同的$$x$$，结果标记不同
+* noise in x：$$x$$本身存在一些记录错误
+
+在确定的$$f$$上加了一些随机性的东西，就变成了一个概率性的问题，我们的target function也就变成了一个target distribution。
+
+![8-2](\img\in-post\machine-learning-fundation\8-2.PNG)
+
+对于某个样本$$x$$，理想状态下，应该有$$y=f(x)=+1$$，但由于某种noise的存在，该noise会有30%的概率转换$$f(x)$$的结果(把+1变成-1或把-1变成+1)。因此在$$\cal D$$中，该样本有70%的概率表现出$$y=+1$$，30%的概率表现出$$y=−1$$. 
+
+![8-3](\img\in-post\machine-learning-fundation\8-3.PNG)
+
+### 误差的衡量
+
+误差的定义会影响训练过程，所以我们要根据目标定义好误差函数。这里需要注意的就是不同的错误，代价可能是不同的，因此，在误差的衡量上可以有不同的权重。
+
+这一节很多知识这里就不详细记录了，可以参考讲义。
