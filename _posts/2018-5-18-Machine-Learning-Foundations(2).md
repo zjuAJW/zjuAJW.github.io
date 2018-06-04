@@ -37,16 +37,19 @@ $$\omega_{lin} = (X^TX)^{-1}X^Ty$$
 ![9-2](\img\in-post\machine-learning-fundation\9-2.PNG)
 
 那么其实$$y-\hat y=(I-H)y=(I-H)noise$$（y和noise做投影时的垂线是一样的），所以我们可以得到：
+
+
 $$
 \begin{aligned}
 \\\
 E_{in}(\color{blue}{w_{LIN}})&=\frac{1}{N}||\color{green}{y-\hat{y}}||^2\\\
 &=\frac{1}{N}||(I-\color{orange}{H})noise||^2 \\\
 &=\frac{1}{N}trace(I-\color{orange}{H})||noise||^2 \\\
-&=\frac{1}{N}(N-(d+1))||noise||^2\\\
-
+&=\frac{1}{N}(N-(d+1))||noise||^2
 \end{aligned}
 $$
+
+
 至于这里这个$$trace(I-H)=N-(d+1)$$的结论，课程里也没有详细说，这里也就不给出证明了。
 
 所以我们可以得到

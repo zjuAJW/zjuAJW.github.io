@@ -279,13 +279,15 @@ $$
 这里我想偷个懒了，因为整个证明实在是太需要技巧性了，说实话我一个数学渣渣也没怎么看下去，所以这里直接给出一个结论，就是**VC-Bound**:
 
 
+
 $$
 \begin{aligned}
 \mathbb{P}[BAD] &= \mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon] \\\
-&\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N\\\
-
+&\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N
 \end{aligned}
 $$
+
+
 所以，有了以上的这些讨论，我们可以得到，如果我们的$$m_{\cal H}(N)$$有breaks at k，并且N足够大，那么我们就可以保证$$E_{in}=E_{out}$$，如果我们的算法$$\cal A$$又能够选择到一个$$E_{in}$$很小的h的话，我们就可以做到学习啦：-）！
 
 ### VC dimension
