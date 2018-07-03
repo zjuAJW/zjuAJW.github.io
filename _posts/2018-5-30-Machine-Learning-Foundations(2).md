@@ -127,3 +127,37 @@ OVA的缺点在于如果我们的类别很多的话，那么单个类的数据�
 ![12-2](\img\in-post\machine-learning-fundation\12-2.PNG)
 
 诚然，我们采用维度更高的变换，可以得到更低的$$E_{in}$$，但是很可能过高的复杂度会导致$$E_{out}$$反而变大了。所以，我们应该从简单的模型做起，逐渐增加模型的复杂度。
+
+## Lecture 13 Hazard of Overfitting
+
+过拟合通常是指$$E_{in}$$很小，但是$$E_{out}$$很大的情况。
+
+![13-1](\img\in-post\machine-learning-fundation\13-1.PNG)
+
+如图所示，讨论了噪声和数据量对过拟合的影响。
+
+在第一个图中，target function是一个10次多项式，另外加了一些噪声。我们分别用2次多项式和10次多项式的Hypothesis set来进行拟合，结果发现$$\cal H_{10}$$反而过拟合了。原因就在于我们的数据量不足。
+
+![13-2](\img\in-post\machine-learning-fundation\13-2.PNG)
+
+以上的学习曲线是我们在第九讲中提到的，在数据量非常大的时候，$$\cal H_{10}$$的$$E_{out}$$是更小的，但是在$$N$$比较小的时候，$$\cal H_{10}$$的$$E_{out}$$是要更大的，所以在数据量很少的时候，$$\cal H_{10}$$会过拟合。
+
+这是在有噪声的情况下，那么对于没有噪声的情况呢？在本讲第一幅度的右边，target function是一个50次的多项式，但是没有添加噪声，而从结果来看，$$\cal H_{10}$$还是过拟合了。这种情况下过拟合的原因在于，我们的target function本身太过于复杂了，不管$$\cal H_{2}$$还是$$\cal H_{10}$$都没有办法很好的去拟合，这种复杂性本身就相当于是一种噪声，我们称之为**Deterministic Noise**，确定性噪声。确定性噪声可以认为是$$\cal H$$中最好的一个$$h^*$$与target function之间的差值，因此它是与$$\cal H$$ 有关的。
+
+![13-3](\img\in-post\machine-learning-fundation\13-3.PNG)
+
+关于这个确定性噪声，我感觉自己没有完全理解，，，，，，
+
+最后给出一个更加细致的分析图：
+
+![13-4](\img\in-post\machine-learning-fundation\13-4.PNG)
+
+上图中，红色越深，代表overfit程度越高，蓝色越深，代表overfit程度越低。先看左边的图，左图中$$\cal H$$阶数$$Q_f$$固定为20，横坐标代表样本数量N，纵坐标代表噪声水平$$\sigma^2$$。红色区域集中在N很小或者$$\sigma^2$$很大的时候，也就是说N越大，$$\sigma^2$$越小，越不容易发生overfit。右边图中$$\sigma^2=0.1$$，横坐标代表样本数量N，纵坐标代表目标函数阶数$$Q_f$$。红色区域集中在N很小或者$$Q_f$$很大的时候，也就是说N越大，$$Q_f$$越小，越不容易发生overfit。上面两图基本相似。 
+
+从图中我们也可以总结出会造成overfitting的几个原因：数据量少、噪声大、模型过于复杂都会导致过拟合。
+
+那么我们如何避免过拟合呢？主要有以下几种方法：
+
+1. data cleaning/pruning：对数据里label明显错误的样本进行修正或者去除
+2. data hinting：数据量不够时，可以想办法获得更多数据，这里data hinting是指对原有数据进行简单的变换，比如一些平移、旋转等等。
+3. regularization和validation：regularization主要用来控制模型复杂度，而vallidation可以看作是一种early stopping，这个我们在后续会详细展开。

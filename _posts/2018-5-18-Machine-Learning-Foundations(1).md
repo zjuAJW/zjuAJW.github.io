@@ -283,9 +283,10 @@ $$
 $$
 \begin{aligned}
 \mathbb{P}[BAD] &= \mathbb{P}[\exists h \in \mathcal{H}\text{ s.t. } |E_{in}(h)-E_{out}(h)|\gt \epsilon] \\\
-&\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N
+&\leq 4m_{\mathcal{H}}(2N)exp(-\frac{1}{8}\epsilon^2N）
 \end{aligned}
 $$
+
 
 
 所以，有了以上的这些讨论，我们可以得到，如果我们的$$m_{\cal H}(N)$$有breaks at k，并且N足够大，那么我们就可以保证$$E_{in}=E_{out}$$，如果我们的算法$$\cal A$$又能够选择到一个$$E_{in}$$很小的h的话，我们就可以做到学习啦：-）！
@@ -302,9 +303,9 @@ VC dimension的定义其实就是最大的非break point值，也就是使得$$m
 
 但这里我们要注意，通过成长函数来求VC维没什么太大的意义，因为我们通常很难得到某个$$\cal H$$的成长函数，而是希望能够得到VC维，从而来用$$N_{d_{vc}}$$bound住成长函数。那么如何来求$$d_{vc}$$呢？
 
-从物理意义上来讲，VC维可以近似看作是$$\cal H$$的自由度大小，或者说参数的个数，对于上面所说的几个$$\H$$都是成立的。
+从物理意义上来讲，VC维可以近似看作是$$\cal H$$的自由度大小，或者说参数的个数，对于上面所说的几个$$\cal H$$a都是成立的。
 
-回到我们机器学习的两个关键问题，$$E_{in}$$和$$E_{out}$$是否接近，以及$$E_{in}$$能否足够小。那么我们的$$d_{vc}$是如何影响这两个问题的呢？
+回到我们机器学习的两个关键问题，$$E_{in}$$和$$E_{out}$$是否接近，以及$$E_{in}$$能否足够小。那么我们的$$d_{vc}$$是如何影响这两个问题的呢？
 
 ![7-3](\img\in-post\machine-learning-fundation\7-3.PNG)
 
