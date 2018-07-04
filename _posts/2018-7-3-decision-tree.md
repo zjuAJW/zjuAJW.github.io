@@ -94,3 +94,7 @@ $$C_\alpha(T_t)=C(T_t)+\alpha\vert T_t\vert$$
 
 
 
+## GBDT和Xgboost
+
+GBDT和Xgboost是以决策树为基础的两个重要算法，两者单独在另一篇文章中进行讨论，详见[GBDT和Xgboost](https://zjuajw.github.io/2018/02/28/GBDT-and-Xgboost/)
+
