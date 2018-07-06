@@ -161,3 +161,10 @@ OVA的缺点在于如果我们的类别很多的话，那么单个类的数据�
 1. data cleaning/pruning：对数据里label明显错误的样本进行修正或者去除
 2. data hinting：数据量不够时，可以想办法获得更多数据，这里data hinting是指对原有数据进行简单的变换，比如一些平移、旋转等等。
 3. regularization和validation：regularization主要用来控制模型复杂度，而vallidation可以看作是一种early stopping，这个我们在后续会详细展开。
+
+## Lecture 14 Regularization
+
+正则化的问题因为之前就了解过一些(详见[正则化](https://zjuajw.github.io/2018/03/26/regularization/))，所以这里就简单跳过了，没有什么太新的东西。
+
+## Lecture 15 Validation
+
