@@ -1,0 +1,12 @@
+---
+layout:     post
+title:      "重新开始"
+subtitle:   "记录生活"
+date:       2022-06-26 22:00:00
+author:     "AJW"
+header-img: "img/tech.jpg"
+tags:
+    - 生活
+---
+
+测试
