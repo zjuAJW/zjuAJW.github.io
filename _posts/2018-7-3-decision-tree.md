@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "决策树"
+title:      "决策树的理解"
 subtitle:   "你真的理解了吗"
 date:       2018-06-27 15:00:00
 author:     "AJW"
