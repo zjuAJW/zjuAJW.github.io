@@ -83,10 +83,7 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
-        title: "AJW BLOG",
-        href: "https://zjuAJW.github.io"
-    },{
-        title: "Hux BLOG-模板来源",
+        title: "Hux BLOG-博客模板来源",
         href: "https://github.com/Huxpro/huxpro.github.io"
     }
 ]
