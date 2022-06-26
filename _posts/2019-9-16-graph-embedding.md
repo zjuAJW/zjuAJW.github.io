@@ -7,7 +7,7 @@ author:     "AJW"
 header-img: "img/tech.jpg"
 tags:
     - CTR
-	- 推荐系统
+    - 推荐系统
 ---
 
 传统的embedding模型处理的都是序列化的数据，而在很多场景，比如电商中，人、物、场之间往往是复杂的图结构，那么这时候如何来进行合理的embedding以表示它们之间的相关度呢，这就是Graph Embedding做的事情。
